@@ -49,7 +49,7 @@ function design($a,$b){
 	echo "<a href='".$a."'>".$b."</a></br>";
 	$second_url = file_get_contents($a);
 	preg_match("/href='(.*)' title='$b/",$second_url,$c);
-	echo $c[1];
+	//echo $c[1];//處理中
 }
 
 
