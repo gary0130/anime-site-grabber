@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <title>php練習</title>
 <style>
-a{
-	color:#963;
-	
-}
-dir{
-	float:left;
+a {
+	color: #963;
 }
 
 </style>
 </head>
 
 <body>
-<p>動畫網站爬蟲</p>
-  <?php
+<p>網站爬蟲</p>
+<?php
+/*
+核心版本
+能夠連到真實連結
+20170222
+*/
 ini_set("max_execution_time", "180");//設定搜尋時間限制。注意:搜尋需要大量時間
 $url = "http://jac-animation-net.blogspot.tw/";//取得連結
 $page_content = file_get_contents($url);
@@ -35,15 +36,18 @@ $times=0;$url2;$res2;
 preg_match_all("/href='(.*)'/",$res[1],$url2);
 $howmuch=(count($url2, 1))/2-1;//計算目標數量
 echo "列表總數=".$howmuch."</br>";
+echo "\n";
+
 //print_r($url2);
 preg_match_all("/href='(.*)'/",$res[1],$url2);//網址
 preg_match_all("/'>(.*)</",$res[1],$res2);//動畫名
 //dev($url2[1][5]);
+
 while($times<$howmuch){
 	//印出網址與名稱
 	
 	design($url2[1][$times],$res2[1][$times],$times);
-	//echo $url2[1][$times].">".$res2[1][$times]."</br>";
+	//echo $url2[1][$times].">".$res2[1][$times]."</br>";//舊版
 	$times=$times+1;
 }
 
@@ -52,9 +56,9 @@ function design($a,$b,$t){
 	
 	$second_url = file_get_contents($a);
 	preg_match_all("/href='(.*)' title='.*閱讀更多/",$second_url,$url3);//抓取真實連結
-	echo "<a href='".$url3[1][0]."'>".($t+1).".".$b."</a></br>";
-	//$second_url=null;
-	//$url3=null;
+	echo "<a href='".$url3[1][0]."'>".($t+1).".".$b."</a></br>";//輸出格式
+	echo "\n";
+	
 }
 
 function dev($d){
@@ -66,6 +70,5 @@ function dev($d){
 
 ?>
 
-<p>html end</p>
 </body>
 </html>
